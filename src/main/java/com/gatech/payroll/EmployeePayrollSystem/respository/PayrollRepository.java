@@ -11,7 +11,7 @@ import java.util.List;
 @Repository
 public interface PayrollRepository extends JpaRepository<Payroll, Long> {
 
-    //select * from payroll as p inner joing employee as e
+    //select * from payroll as p inner join employee as e
     // where e.id = p.employee_id
     List<Payroll> findByEmployeeId(Long employeeId);
 
