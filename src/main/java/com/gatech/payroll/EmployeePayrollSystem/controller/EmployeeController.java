@@ -2,6 +2,7 @@ package com.gatech.payroll.EmployeePayrollSystem.controller;
 
 import com.gatech.payroll.EmployeePayrollSystem.model.Employee;
 import com.gatech.payroll.EmployeePayrollSystem.service.EmployeeService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +17,7 @@ public class EmployeeController {
     EmployeeService employeeService;
 
     @PostMapping("/employee")
-    public ResponseEntity<Employee> newEmployee(@RequestBody Employee newEmployee){
+    public ResponseEntity<Employee> newEmployee(@RequestBody @Valid Employee newEmployee){
         Employee employee = employeeService.addEmployee(newEmployee);
         return new ResponseEntity<>(employee, HttpStatus.CREATED);
     }
