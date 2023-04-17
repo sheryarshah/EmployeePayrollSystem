@@ -1,6 +1,8 @@
 package com.gatech.payroll.EmployeePayrollSystem.model;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
@@ -25,6 +27,8 @@ public class Employee {
     private String lastName;
 
     @Column(name = "salary", nullable = false)
+    @Min(value = 1, message = "Invalid salary: Equals to zero")
+    @Max(value = 100, message = "Invalid salary: Exceeds salary range")
     private double salary;
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "employee")

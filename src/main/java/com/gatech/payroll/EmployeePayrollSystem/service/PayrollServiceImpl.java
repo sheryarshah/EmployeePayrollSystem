@@ -1,5 +1,6 @@
 package com.gatech.payroll.EmployeePayrollSystem.service;
 
+import com.gatech.payroll.EmployeePayrollSystem.exception.ResourceNotFoundException;
 import com.gatech.payroll.EmployeePayrollSystem.model.Payroll;
 import com.gatech.payroll.EmployeePayrollSystem.respository.EmployeeRepository;
 import com.gatech.payroll.EmployeePayrollSystem.respository.PayrollRepository;
@@ -31,7 +32,7 @@ public class PayrollServiceImpl implements PayrollService{
     @Override
     public List<Payroll> getPayrollByEmployeeId(Long employeeId) {
         if(!employeeRepository.existsById(employeeId)){
-            throw new NoSuchElementException("Employee id number " + employeeId + " not found");
+            throw new ResourceNotFoundException("Employee id number " + employeeId + " not found");
         }
         return payrollRepository.findByEmployeeId(employeeId);
     }
@@ -45,13 +46,13 @@ public class PayrollServiceImpl implements PayrollService{
             payroll.setGrossPay(grossPay);
             payroll.setNetPay(netPay);
             return payrollRepository.save(payroll);
-        }).orElseThrow(() -> new NoSuchElementException("Employee id number " + employeeId + " not found"));
+        }).orElseThrow(() -> new ResourceNotFoundException("Employee id number " + employeeId + " not found"));
         return p;
     }
 
     @Override
     public Payroll updatePayroll(Long payrollId, Payroll payrollDetails) {
-        Payroll payroll = payrollRepository.findById(payrollId).orElseThrow(() -> new NoSuchElementException("Payroll id " +payrollId+ " not found"));
+        Payroll payroll = payrollRepository.findById(payrollId).orElseThrow(() -> new ResourceNotFoundException("Payroll id " +payrollId+ " not found"));
 
         payroll.setGrossPay(!Double.isNaN(payrollDetails.getGrossPay()) ? payrollDetails.getGrossPay() : payroll.getGrossPay());
         payroll.setNetPay(!Double.isNaN(payrollDetails.getNetPay()) ? payrollDetails.getNetPay() : payroll.getNetPay());
