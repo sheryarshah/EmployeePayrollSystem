@@ -2,6 +2,7 @@ package com.gatech.payroll.EmployeePayrollSystem.exception;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
@@ -47,5 +48,16 @@ public class ControllerExceptionHandler {
         return message;
     }
 
+    @ExceptionHandler(AuthenticationException.class)
+    @ResponseStatus(value = HttpStatus.UNAUTHORIZED)
+    public ErrorMessage handleAuthenticationException(Exception ex, WebRequest request){
+        ErrorMessage message = new ErrorMessage(
+                new Date(),
+                HttpStatus.UNAUTHORIZED.value(),
+                ex.getMessage(),
+                request.getDescription(false)
+        );
+        return message;
+    }
 
 }
