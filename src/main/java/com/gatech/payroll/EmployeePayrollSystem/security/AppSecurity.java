@@ -49,6 +49,8 @@ public class AppSecurity {
                 .httpBasic(Customizer.withDefaults())
                 .exceptionHandling().authenticationEntryPoint(authenticationEntryPoint).accessDeniedHandler(accessDeniedHandler());
 
+        http.headers().frameOptions().sameOrigin();
+
         return http.build();
 
     }
